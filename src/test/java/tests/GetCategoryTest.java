@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import retrofit2.Response;
 import servises.CategoryService;
 import servises.GetCategoryResponse;
+import utils.DBInvocation;
 import utils.RetrofitUtils;
 
 
@@ -29,13 +30,19 @@ public class GetCategoryTest {
     @SneakyThrows
     @Test
     void getCategoryWithResponseAssertionsPositiveTest() {
-        Response<GetCategoryResponse> response = categoryService.getCategory(1).execute();
+        int id = 1;
+        Response<GetCategoryResponse> response = categoryService.getCategory(id).execute();
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
         assert response.body() != null;
-        assertThat(response.body().getId(), equalTo(1));
-        assertThat(response.body().getTitle(), equalTo("Food"));
+        assertThat(response.body().getId(), equalTo(id));
+        String title = DBInvocation.getTitleById(id);
+        System.out.println(title);
+        System.out.println(id);
+        assertThat(response.body().getTitle(), equalTo(title));
         response.body().getProducts().forEach(product ->
-                assertThat(product.getCategoryTitle(), equalTo("Food")));
+                assertThat(product.getCategoryTitle(), equalTo(title)));
+
+
     }
 
 }
