@@ -55,8 +55,10 @@ public class CreateProductTest {
         assert response.body() != null;
         id = response.body().getId();
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
-        Response<ResponseBody> response2 = productService.deleteProduct(id).execute();
-        assertThat(response2.isSuccessful(), CoreMatchers.is(true));
+        DBInvocation.deleteProduct(id);
+
+//        Response<ResponseBody> response2 = productService.deleteProduct(id).execute();
+//        assertThat(response2.isSuccessful(), CoreMatchers.is(true));
 
 
     }
@@ -89,18 +91,17 @@ public class CreateProductTest {
         assert response.body() != null;
         id = response.body().getId();
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
-        DBInvocation.createNewProduct(product.withId(id));
+//        DBInvocation.createNewProduct(product.withId(id));
         Product newProduct = new Product().withId(id).withPrice(13).withTitle("Salo").withCategoryTitle("Food");
-        DBInvocation.updateProduct(newProduct);
+//        DBInvocation.updateProduct(newProduct);
         Response<Product> response1 = productService.putProducts(newProduct).execute();
         assertThat(response1.isSuccessful(), CoreMatchers.is(true));
         assert response1.body() != null;
         Product compareProduct = DBInvocation.getProductById(id);
-
         assertThat(response1.body().getPrice(), equalTo(compareProduct.getPrice()));
         assertThat(response1.body().getTitle(), equalTo(compareProduct.getTitle()));
-        Response<ResponseBody> response2 = productService.deleteProduct(id).execute();
-        assertThat(response2.isSuccessful(), CoreMatchers.is(true));
+//        Response<ResponseBody> response2 = productService.deleteProduct(id).execute();
+//        assertThat(response2.isSuccessful(), CoreMatchers.is(true));
         DBInvocation.deleteProduct(id);
     }
 
@@ -113,6 +114,7 @@ public class CreateProductTest {
                 .execute();
 
         assertThat(response.isSuccessful(), CoreMatchers.is(true));
+
     }
 
 

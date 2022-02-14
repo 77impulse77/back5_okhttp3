@@ -58,7 +58,7 @@ public class DBInvocation {
         Products products = new Products();
         products.setId((long) (int) product.getId());
         products.setPrice(product.getPrice());
-//        products.setCategory_id(1L);
+        products.setCategory_id(1L);
         products.setTitle(product.getTitle());
         System.out.println(" разделительная черта");
         System.out.println(product.getId() + " " + product.getPrice() + " " + product.getTitle());
@@ -94,14 +94,15 @@ public class DBInvocation {
     public static Product getProductById(int id) throws IOException {
 
         ProductsMapper productsMapper = getProductsMapper(resource);
-       Products products = productsMapper.selectByPrimaryKey((long)id);
+        Products products = productsMapper.selectByPrimaryKey((long) id);
+        System.out.println(products.getId());
         Product product = new Product();
-        product.withId((int)(long) products.getId());
-        product.withPrice(products.getPrice());
-        product.withCategoryTitle("Food");
-        product.withTitle(products.getTitle());
 
-        return product;
+        return product.withId((int) (long) products
+                        .getId())
+                .withPrice(products.getPrice())
+                .withTitle(products.getTitle())
+                .withCategoryTitle("Food");
 
     }
 
