@@ -113,7 +113,7 @@ public class CreateProductTest {
         Response<ResponseBody> response = productService.getProducts()
                 .execute();
 
-        assertThat(response.isSuccessful(), CoreMatchers.is(true));
+        assertThat(response.isSuccessful(), CoreMatchers.is(false));
 
     }
 
